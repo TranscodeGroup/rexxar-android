@@ -4,7 +4,6 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import com.douban.rexxar.Constants;
-import com.douban.rexxar.resourceproxy.ResourceProxy;
 import com.douban.rexxar.route.RouteManager;
 import com.douban.rexxar.utils.LogUtils;
 import com.douban.rexxar.utils.MD5Utils;
@@ -118,7 +117,7 @@ public class CacheHelper {
             return null;
         }
         // html地址需要去掉参数
-        url = Uri.parse(url).buildUpon().clearQuery().build().toString();
+        url = Utils.normalizeHtmlUrl(url);
         if (!checkUrl(url)) {
             return null;
         }

@@ -1,5 +1,6 @@
 package com.douban.rexxar.utils;
 
+import android.net.Uri;
 import android.os.Build;
 
 import java.io.UnsupportedEncodingException;
@@ -44,5 +45,9 @@ public class Utils {
             e.printStackTrace();
         }
         return source;
+    }
+
+    public static String normalizeHtmlUrl(String url) {
+        return Uri.parse(url).buildUpon().fragment(null).clearQuery().build().toString();
     }
 }

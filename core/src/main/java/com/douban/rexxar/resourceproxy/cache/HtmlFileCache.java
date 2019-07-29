@@ -12,10 +12,7 @@ import com.douban.rexxar.utils.io.IOUtils;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
@@ -79,6 +76,7 @@ public class HtmlFileCache implements ICache {
                 return false;
             }
         }
+        url = Utils.normalizeHtmlUrl(url);
         // 如果存在，则先删掉之前的缓存
         removeCache(url);
         File saveFile = null;

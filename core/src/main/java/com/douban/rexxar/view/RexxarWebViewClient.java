@@ -197,7 +197,7 @@ public class RexxarWebViewClient extends WebViewClient {
                 try {
                     data = IOUtils.toString(cacheEntry.inputStream);
                     // hack 检查cache是否完整
-                    if (TextUtils.isEmpty(data) || !data.endsWith("</html>")) {
+                    if (TextUtils.isEmpty(data) || !data.trim().endsWith("</html>")) {
                         RxLoadError error = RxLoadError.HTML_CACHE_INVALID.clone();
                         if (TextUtils.isEmpty(data)) {
                             error.extra = "html is empty";
@@ -390,6 +390,10 @@ public class RexxarWebViewClient extends WebViewClient {
                 return null;
             }
             Request.Builder builder = new Request.Builder();
+            if (requestUrl.startsWith(Constants.FILE_AUTHORITY)) {
+                // 若html中使用了相对路径, 则html中的资源也会变成file:///...
+                requestUrl = requestUrl.substring(Constants.FILE_AUTHORITY.length());
+            }
             Uri uri = Uri.parse(requestUrl);
             String method = uri.getQueryParameter(Constants.KEY_METHOD);
             //  如果没有值则视为get

@@ -32,6 +32,11 @@ public class Route implements Serializable{
     public Route() {
     }
 
+    public Route(String remoteFile) {
+        this.remoteFile = remoteFile;
+        this.uriRegex = ".*";
+    }
+
     /**
      * 匹配传入的uri，如果能匹配上则说明可以用这个html来显示
      *

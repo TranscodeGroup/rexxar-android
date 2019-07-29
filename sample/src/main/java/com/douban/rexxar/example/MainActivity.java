@@ -8,9 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.douban.rexxar.example.widget.AlertDialogWidget;
-import com.douban.rexxar.example.widget.TitleWidget;
-import com.douban.rexxar.example.widget.ToastWidget;
 import com.douban.rexxar.resourceproxy.ResourceProxy;
 
 import butterknife.ButterKnife;
@@ -27,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public TextView mRexxarButton;
     @InjectView(R.id.partial_rexxar_page)
     public TextView mPartialRexxarButton;
+    @InjectView(R.id.vue_page)
+    public TextView mVuePageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.inject(this);
         mRexxarButton.setOnClickListener(this);
         mPartialRexxarButton.setOnClickListener(this);
+        mVuePageButton.setOnClickListener(this);
     }
 
     @Override
@@ -72,6 +72,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 DemoActivity.startActivity(this);
                 return;
             }
+            case R.id.vue_page:
+                RexxarActivity.startActivity(this, "http://192.168.0.111:8080/index.html#/cmd/1078/fuck");
+                return;
         }
     }
 }

@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Parcelable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
@@ -303,19 +302,24 @@ public class RexxarWebViewCore extends SafeWebView {
         if (TextUtils.isEmpty(uri)) {
             throw new IllegalArgumentException("[RexxarWebView] [loadUri] uri can not be null");
         }
-        final Route route;
+        Route _route;
         if (page) {
-            route = RouteManager.getInstance().findRoute(uri);
+            _route = RouteManager.getInstance().findRoute(uri);
         } else {
-            route = RouteManager.getInstance().findPartialRoute(uri);
+            _route = RouteManager.getInstance().findPartialRoute(uri);
         }
-        if (null == route) {
+        if (null == _route) {
             LogUtils.i(TAG, "route not found");
-            if (null != callback) {
-                callback.onFail(RxLoadError.ROUTE_NOT_FOUND);
+            if (RouteManager.supportNormalUrl()) {
+                _route = new Route(uri);
+            } else {
+                if (null != callback) {
+                    callback.onFail(RxLoadError.ROUTE_NOT_FOUND);
+                }
+                return;
             }
-            return;
         }
+        final Route route = _route;
         if (null != callback) {
             callback.onStartLoad();
         }
@@ -372,7 +376,8 @@ public class RexxarWebViewCore extends SafeWebView {
         LogUtils.i(TAG, "file cache , doLoadCache cache file");
         // using file schema to doLoadCache
         // 4.0的版本加载本地文件不能传递parameters，所以html文本需要替换内容
-        loadUrl(Constants.FILE_AUTHORITY + route.getHtmlFile() + "?uri=" + Uri.encode(uri));
+        Uri realUri = Uri.parse(route.remoteFile).buildUpon().appendQueryParameter("uri", uri).build();
+        loadUrl(Constants.FILE_AUTHORITY + realUri);
     }
 
     public interface WebViewHeightCallback {

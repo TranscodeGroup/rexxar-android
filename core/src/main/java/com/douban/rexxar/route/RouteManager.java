@@ -31,14 +31,16 @@ public class RouteManager {
     public static final String TAG = RouteManager.class.getSimpleName();
 
     public static class RouteConfig {
-        public String routeApi;
-        public String routeCacheFileName;
-        public boolean enableHtmlMd5Check;
+        public final String routeApi;
+        public final String routeCacheFileName;
+        public final boolean enableHtmlMd5Check;
+        public final boolean supportNormalUrl;
 
-        public RouteConfig(String routeApi, String cacheFileName, boolean enableHtmlMd5Check) {
+        public RouteConfig(String routeApi, String cacheFileName, boolean enableHtmlMd5Check, boolean supportNormalUrl) {
             this.routeApi = routeApi;
             this.routeCacheFileName = cacheFileName;
             this.enableHtmlMd5Check = enableHtmlMd5Check;
+            this.supportNormalUrl = supportNormalUrl;
         }
     }
 
@@ -126,6 +128,13 @@ public class RouteManager {
             return sRouteConfig.enableHtmlMd5Check;
         }
         return true;
+    }
+
+    public static boolean supportNormalUrl(){
+        if (null != sRouteConfig) {
+            return sRouteConfig.supportNormalUrl;
+        }
+        return false;
     }
 
     /**

@@ -89,6 +89,7 @@ public class Constants {
     public static final String EXTENSION_PNG = "png";
     public static final String EXTENSION_WEBP = "webp";
     public static final String EXTENSION_GIF = "gif";
+    public static final String EXTENSION_ICO = "ico";
     public static final List<String> CACHE_FILE_EXTENSION = new ArrayList<String>() {};
     static {
         CACHE_FILE_EXTENSION.add(EXTENSION_HTML);
@@ -100,6 +101,7 @@ public class Constants {
         CACHE_FILE_EXTENSION.add(EXTENSION_PNG);
         CACHE_FILE_EXTENSION.add(EXTENSION_WEBP);
         CACHE_FILE_EXTENSION.add(EXTENSION_GIF);
+        CACHE_FILE_EXTENSION.add(EXTENSION_ICO);
     }
 
 
